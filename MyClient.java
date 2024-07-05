@@ -18,17 +18,19 @@ public class MyClient extends Thread {
 
             // Creating Socket class object and
             // initializing Socket
-            Socket soc = new Socket("localhost", 6666);
+            Socket soc = new Socket("localhost", 8080);
 
+            // Creating dataOutput Stream
             DataOutputStream d = new DataOutputStream(
                     soc.getOutputStream());
 
+            // Send msg until type quit
             while (!msg.equals("quit")) {
-                // Message to be displayed
                 msg = scanner.nextLine();
                 d.writeUTF(msg);
                 d.flush();
             }
+            // Send the "quit" msg to notify the server
             d.writeUTF(msg);
             // Flushing out internal buffers,
             // optimizing for better performance

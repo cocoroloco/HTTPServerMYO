@@ -23,13 +23,15 @@ public class MyWorkerThread extends Thread {
             dis = new DataInputStream(this.soc.getInputStream());
             dos = new DataOutputStream(soc.getOutputStream());
 
-            String str = (String) dis.readUTF();
+            String html = "<html><head><title>Simple Page </title></head></html><body><h1>Hey muy buenas a todos</h1></body>";
 
-            while (!str.equals("quit")) {
-                // Display the string on the console
-                System.out.println("Echo= " + str);
-                str = (String) dis.readUTF();
-            }
+            final String CRLF = "\n\r";
+
+            String response = "HTTP/1.1 200 OK" + CRLF +
+                    "Content-Length: " + html.getBytes().length + CRLF +
+                    CRLF + html + CRLF + CRLF;
+
+            dos.write(response.getBytes());
 
         } catch (Exception e) {
             System.out.println(e);
@@ -48,6 +50,5 @@ public class MyWorkerThread extends Thread {
                 e.printStackTrace();
             }
         }
-
     }
 }

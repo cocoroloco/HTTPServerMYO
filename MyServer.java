@@ -30,7 +30,7 @@ public class MyServer extends Thread {
         try {
 
             while (this.serverSocket.isBound() && !this.serverSocket.isClosed()) {
-                // Establishing a connection
+                // Establishing a connection for every request
                 Socket soc = serverSocket.accept();
 
                 MyWorkerThread wt = new MyWorkerThread(soc);
