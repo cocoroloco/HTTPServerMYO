@@ -8,7 +8,7 @@ https://www.youtube.com/watch?v=7GBlCinu9yg&t=213s&ab_channel=Computerphile
   
 Tras conocer un poco sobre HTTP y ver distintas ejemplos de implementacion extraí los pasos necesarios para realizar el servidor.  
 - 1º Establecer una comunicación mediante Sockets
-    - 1.1 Echo Server
+    - 1.1 Echo Server asíncrono mediante Threads
 - 2º Establecer una comunicación siguiendo un protocolo, en este caso, TCP 
 - 3º Manejar la entrada de datos HTTP
 - 4º Responder a los datos

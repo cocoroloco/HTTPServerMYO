@@ -6,41 +6,49 @@ import java.io.*;
 import java.net.*;
 
 // Main class
-public class MyServer {
+public class MyServer extends Thread {
 
-    // Main driver method
-    public static void main(String[] args) {
+    private int port = 6666;
+    private ServerSocket serverSocket;
 
-        // Try block to check for exceptions
+    public MyServer(int port) throws IOException {
+        this.port = port;
+        this.serverSocket = new ServerSocket(this.port);
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    @Override
+    public void run() {
+        super.run();
         try {
 
-            // Creating an object of ServerSocket class
-            // in the main() method for socket connection
-            ServerSocket ss = new ServerSocket(6666);
+            while (this.serverSocket.isBound() && !this.serverSocket.isClosed()) {
+                // Establishing a connection
+                Socket soc = serverSocket.accept();
 
-            // Establishing a connection
-            Socket soc = ss.accept();
+                MyWorkerThread wt = new MyWorkerThread(soc);
+                wt.start();
 
-            // Invoking input stream via getInputStream()
-            // method by creating DataInputStream class
-            // object
-            DataInputStream dis = new DataInputStream(soc.getInputStream());
-
-            String str = (String) dis.readUTF();
-
-            // Display the string on the console
-            System.out.println("message= " + str);
-
-            // Lastly close the socket using standard close
-            // method to release memory resources
-            ss.close();
-        }
-
-        // Catch block to handle the exceptions
-        catch (Exception e) {
+            }
+        } catch (Exception e) {
 
             // Display the exception on the console
             System.out.println(e);
+        } finally {
+            if (this.serverSocket != null) {
+                try {
+                    this.serverSocket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

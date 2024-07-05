@@ -4,13 +4,15 @@
 // Importing required libraries
 import java.io.*;
 import java.net.*;
+import java.util.Scanner;
 
 // Main class
-public class MyClient {
+public class MyClient extends Thread {
 
     // Main driver method
     public static void main(String[] args) {
-
+        String msg = "";
+        Scanner scanner = new Scanner(System.in);
         // Try block to check if exception occurs
         try {
 
@@ -21,13 +23,16 @@ public class MyClient {
             DataOutputStream d = new DataOutputStream(
                     soc.getOutputStream());
 
-            // Message to be displayed
-            d.writeUTF("Hello GFG Readers!");
-
+            while (!msg.equals("quit")) {
+                // Message to be displayed
+                msg = scanner.nextLine();
+                d.writeUTF(msg);
+                d.flush();
+            }
+            d.writeUTF(msg);
             // Flushing out internal buffers,
             // optimizing for better performance
-            d.flush();
-
+            scanner.close();
             // Closing the connections
 
             // Closing DataOutputStream
