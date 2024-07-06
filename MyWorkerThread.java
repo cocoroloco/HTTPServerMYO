@@ -17,11 +17,17 @@ public class MyWorkerThread extends Thread {
         DataInputStream dis = null;
         DataOutputStream dos = null;
         try {
-            // Invoking input stream via getInputStream()
-            // method by creating DataInputStream class
-            // object
             dis = new DataInputStream(this.soc.getInputStream());
             dos = new DataOutputStream(soc.getOutputStream());
+
+            // When we connect from the explorer to the webserver
+            // The explorer automatically create thte request to the webserver
+            // Which is what we see in the print line below
+            int _byte;
+
+            while ((_byte = dis.read()) >= 0) {
+                System.out.print((char) _byte);
+            }
 
             String html = "<html><head><title>Simple Page </title></head></html><body><h1>Hey muy buenas a todos</h1></body>";
 
